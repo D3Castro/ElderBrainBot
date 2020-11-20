@@ -15,15 +15,13 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD_ID = os.getenv('DISCORD_ID')
 
-extensions = ['cogs.owner', 'cogs.dice']
-
 bot = commands.Bot(command_prefix=get_prefix, description='The Elder Brain')
 
 
 if __name__ == '__main__':
-    log.info(TOKEN)
-    for extension in extensions:
-        bot.load_extension(extension)
+    for filename in os.listdir("./cogs"):
+        if filename.endswith(".py") and filename != "__init__.py":
+            bot.load_extension(f'cogs.{filename[:-3]}')
 
 
 @bot.event
